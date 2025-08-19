@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Digital Clock & Date Display</title>
+  </head>
+  <!-- <body class="bg-[#282c34]"> -->
+  <body>
+    <div class="container d-flex flex-column justify-content-center py-4">
+      <form class="mb-3" id="submitAction">
+        <span>Enter Item Name</span>
+        <input type="text" class="form-control mb-2" id="productInput" placeholder="Enter value" />
+        <button type="submit" class="btn btn-primary">Add Item</button>
+      </form>
+      <ul id="tasks" class="d-flex flex-wrap gap-3 m-0 list-inline">
+        <li
+          class="border d-flex flex-fill w-50 rounded-1 justify-content-between align-items-center p-2"
+        >
+          Item <button class="btn btn-sm btn-danger">x</button>
+        </li>
+        <li
+          class="border d-flex flex-fill w-50 rounded-1 justify-content-between align-items-center p-2"
+        >
+          Item <button class="btn btn-sm btn-danger">&times;</button>
+        </li>
+      </ul>
+    </div>
+    <script src="./todo.js"></script>
+  </body>
+</html>
