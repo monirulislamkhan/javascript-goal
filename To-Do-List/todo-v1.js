@@ -20,7 +20,7 @@ form.addEventListener('submit', function (e) {
   // Checkbox
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
-  checkbox.className = 'todo-checkbox';
+  checkbox.className = 'todo-checkbox checkbox';
 
   // span for text
   const span = document.createElement('span');
@@ -47,10 +47,10 @@ list.addEventListener('click', function (e) {
   // list.removeChild(li);
   if (e.target.tagName === 'BUTTON') {
     e.target.parentElement.remove();
-    console.log(e.target.tagName);
   }
 });
 
+// Toggle in checkbox text-decoration:line-through
 list.addEventListener('change', function (e) {
   if (e.target.classList.contains('todo-checkbox')) {
     const li = e.target.parentElement;
