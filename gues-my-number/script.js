@@ -1,91 +1,53 @@
-// Refactored Guess My Number - best-practice style
-// Centralized DOM access, helper functions and clearer variable names.
-
-const DOM = {
-  guessInput: document.getElementById('guessValue'),
-  message: document.querySelector('.message'),
-  numberBox: document.querySelector('.number'),
-  scoreDisplay: document.querySelector('.score'),
-  highscoreDisplay: document.querySelector('.highscore'),
-  checkBtn: document.querySelector('.check'),
-  againBtn: document.querySelector('.again'),
-  body: document.body,
-};
-
-let secretNumber = generateRandom(1, 20);
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
+const guessValue = document.getElementById('guessValue');
+let message = document.querySelector('.message');
+let secretNumberId = document.querySelector('.number');
+let scoreValue = document.querySelector('.score');
+// scoreValue.textContent = 2;
 let score = 20;
 let highScore = 0;
 
-// Initialize UI
-DOM.scoreDisplay.textContent = score;
-DOM.numberBox.textContent = '?';
+// console.log(score);
 
-function generateRandom(min, max) {
-  return Math.trunc(Math.random() * (max - min + 1)) + min;
-}
-
-function displayMessage(msg) {
-  DOM.message.textContent = msg;
-}
-
-function resetUIToDefault() {
-  DOM.body.style.backgroundColor = '#222';
-  DOM.numberBox.style.width = '15rem';
-  DOM.numberBox.textContent = '?';
-}
-
-function updateScoreDisplay() {
-  DOM.scoreDisplay.textContent = score;
-}
-
-function updateHighscore() {
-  if (score > highScore) {
-    highScore = score;
-    DOM.highscoreDisplay.textContent = highScore;
-  }
-}
-
-// Check button handler
-DOM.checkBtn.addEventListener('click', function () {
-  const guess = Number(DOM.guessInput.value);
-
+document.querySelector('.check').addEventListener('click', function () {
+  const guess = Number(guessValue.value);
   if (!guess) {
-    displayMessage('⛔ No number!');
-    return;
-  }
-
-  if (guess === secretNumber) {
-    displayMessage('🎉 Correct Number!');
-    DOM.numberBox.textContent = secretNumber;
-    DOM.body.style.backgroundColor = '#60b347';
-    DOM.numberBox.style.width = '30rem';
-    updateHighscore();
-    return;
-  }
-
-  // Wrong guess
-  if (score > 1) {
-    displayMessage(guess > secretNumber ? '📈 Too high!' : '📉 Too low!');
+    message.textContent = '⛔ No number!';
+  } else if (guess === secretNumber) {
+    message.textContent = '🎉 Correct Number!';
+    secretNumberId.textContent = secretNumber;
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector('.highscore').textContent = highScore;
+    }
+  } else if (guess !== secretNumber) {
+    if (score > 1) {
+      if (guess > secretNumber) {
+        message.textContent = 'Number is High';
+      } else {
+        message.textContent = 'Number is Low';
+      }
+    } else {
+      message.textContent = 'You lost the game!';
+      scoreValue.textContent = 0;
+    }
     score--;
-    updateScoreDisplay();
-  } else {
-    displayMessage('💥 You lost the game!');
-    score = 0;
-    updateScoreDisplay();
-    // Reveal the number when player loses
-    DOM.numberBox.textContent = secretNumber;
+    scoreValue.textContent = score;
   }
 });
 
-// Again / reset game handler
-DOM.againBtn.addEventListener('click', function () {
+document.querySelector('.again').addEventListener('click', function () {
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+  secretNumberId.textContent = '?';
+  guessValue.value = '';
   score = 20;
-  secretNumber = generateRandom(1, 20);
-  resetUIToDefault();
-  DOM.guessInput.value = '';
-  updateScoreDisplay();
-  displayMessage('Start guessing...');
-  // Note: remove the console.log before deploying so secret stays hidden
+  scoreValue.textContent = score; // Added this line to update score display
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  message.textContent = 'Start guessing...';
+  console.log(secretNumber);
 });
 
-// End of refactor
+console.log(secretNumber);
